@@ -15,23 +15,6 @@ body {
     min-height: 100vh;
 }
 
-.embed-container {
-  width: 100%;
-  height: 100vh; /* Tinggi layar penuh */
-  overflow: hidden; /* Menyembunyikan bagian yang keluar dari kotak */
-  position: relative;
-}
-
-.embed-container iframe {
-  width: 100%;
-  height: calc(100vh + 50px); /* Melebihkan tinggi iframe untuk mengganti bagian yang terpotong */
-  position: absolute;
-  top: -50px; /* Menggeser iframe ke atas sejauh 50 pixel untuk menyembunyikan toolbar */
-  left: 0;
-  border: none;
-}
-
-
 .container {
     width: 100%;
     max-width: 900px;
