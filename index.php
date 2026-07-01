@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImamJanuar.my.id - Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Section Atas (Header Card) -->
+        <header class="header-card">
+            <div class="badge-top"> 2 Tools AI Konten Kreator</div>
+            <h1 class="main-title">Kreator Deso</h1>
+            <p class="subtitle">👑 Pusat <strong>Alat</strong> & Sumber Daya <strong>Konten</strong> Kreator ★</p>
+            
+            <!-- Elemen ini sekarang dikontrol oleh JavaScript -->
+            <div class="search-mock"><span id="typing-text"></span><span class="cursor">|</span></div>
+            
+            <div class="info-row">
+                <span class="info-item"><i class="fa-solid fa-globe"></i> www.kreatordeso.my.id</span>
+                <span class="info-item"><i class="fa-brands fa-facebook-f"></i> Kreator Deso</span>
+            </div>
+            
+            <div class="status-online">
+    <span class="dot"></span> 
+    <span id="online-count">6.688</span> Sedang Online
+</div>
+        </header>
+
+       <main class="menu-grid">
+    <a href="https://aistudio.google.com/apps/ec169b75-c8a5-46d1-869f-3e1f5869b8f0?fullscreenApplet=true&showPreview=true&showAssistant=true" target="_blank" class="card">
+        <span class="card-icon purple">&#128247;</span>
+        <div class="card-title">GAMBAR TO PROMPT</div>
+    </a>
+
+    <a href="https://aistudio.google.com/apps/75d620f1-dea0-4165-b13e-8f0f3b351b96?showAssistant=true&showPreview=true&fullscreenApplet=true" target="_blank" class="card">
+        <div class="card-icon blue">&#9654;</div>
+        <div class="card-title">ASISTEN SEO YOUTUBE</div>
+    </a>
+
+</main>
+    </div>
+
+  <script>
+    // ==========================================
+    // 1. EFEK TEKS MENGETIK (TYPEWRITER)
+    // ==========================================
+    const words = [
+        "Dari ide sampai publish",
+        "Riset keyword instan",
+        "Bikin skrip video otomatis",
+        "Generate gambar AI sekali klik"
+    ];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const textElement = document.getElementById("typing-text");
+
+    function type() {
+        const currentWord = words[wordIndex];
+        if (isDeleting) {
+            textElement.textContent = currentWord.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            textElement.textContent = currentWord.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let speed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === currentWord.length) {
+            speed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            speed = 500;
+        }
+        setTimeout(type, speed);
+    }
+
+    // ==========================================
+    // 2. COUNTER ANGKA REALTIME
+    // ==========================================
+    let currentOnline = 100;
+    function updateOnlineRealtime() {
+        const change = Math.floor(Math.random() * 8) - 3; 
+        currentOnline += change;
+        
+        if (currentOnline < 50) currentOnline += 5;
+        if (currentOnline > 6750) currentOnline -= 5;
+
+        const el = document.getElementById("online-count");
+        if(el) el.textContent = currentOnline.toLocaleString('id-ID');
+
+        setTimeout(updateOnlineRealtime, Math.floor(Math.random() * 10000) + 5000);
+    }
+
+    // JALANKAN KEDUANYA SAAT HALAMAN SIAP
+    document.addEventListener("DOMContentLoaded", () => {
+        setTimeout(type, 500);
+        updateOnlineRealtime();
+    });
+</script>
+    
+</body>
+</html>
