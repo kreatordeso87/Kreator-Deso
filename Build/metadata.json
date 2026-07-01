@@ -1,8 +1,0 @@
-{
-  "name": "Remix: Kreator Deso: PromptVision AI v2",
-  "description": "Generate highly detailed visual description prompts from images and YouTube thumbnails using Gemini AI.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
