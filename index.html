@@ -6,18 +6,342 @@
     <link rel="icon" type="image/png" href="Logo Kreator Deso.png">
     <title>Kreator Deso - Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #04140c; /* Background utama: Hijau sangat gelap */
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* --- Header Card Styles --- */
+        .header-card {
+            background-color: #0b2216; /* Hijau gelap untuk kartu */
+            border: 1px solid #143523;  /* Border hijau medium */
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .badge-top {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #a3b899;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .main-title {
+            font-family: 'Georgia', cursive, serif;
+            font-size: 42px;
+            font-style: italic;
+            color: #39ff14; /* Warna hijau neon dasar */
+            font-weight: 500;
+            
+            /* Efek Glow Hijau Menyala (Multi-layered text shadow) */
+            text-shadow: 0 0 5px #39ff14, 
+                         0 0 10px #39ff14, 
+                         0 0 20px #22c55e, 
+                         0 0 40px #15803d;
+                         
+            animation: pulseGlow 2s infinite ease-in-out; /* Animasi detak glow opsional */
+        }
+
+        /* Animasi tambahan agar efek glownya terlihat hidup/berkedip lembut */
+        @keyframes pulseGlow {
+            0%, 100% {
+                text-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14, 0 0 20px #22c55e;
+            }
+            50% {
+                text-shadow: 0 0 8px #39ff14, 0 0 18px #39ff14, 0 0 30px #22c55e, 0 0 50px #15803d;
+            }
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: #a3b8cc;
+        }
+
+        .subtitle strong {
+            color: #facc15;
+        }
+
+        .search-mock {
+            background-color: #0e2b1c;
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #a3b899;
+            text-align: left;
+            border: 1px solid #18442c;
+        }
+
+        /* Animasi Kursor Ketik */
+        .cursor {
+            animation: blinkCursor 0.7s infinite;
+        }
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .info-row {
+            display: flex;
+            gap: 15px;
+            background-color: rgba(0, 0, 0, 0.15);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: #a3b899;
+            border: 1px solid #143523;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .info-item i {
+            color: #4ade80; /* Ikon menggunakan warna hijau terang */
+            margin-right: 5px;
+        }
+
+        .status-online {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: #4ade80;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        /* Animasi Titik Hijau Berkedip */
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e;
+            animation: blinkDot 1.5s infinite ease-in-out;
+        }
+
+        @keyframes blinkDot {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 4px #22c55e, 0 0 8px #22c55e;
+            }
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+                background-color: #4ade80;
+            }
+        }
+
+        /* --- Grid Menu Styles --- */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .card {
+            background-color: #0b2216; /* Hijau gelap untuk grid kartu menu */
+            border: 1px solid #143523;
+            border-radius: 15px;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            cursor: pointer;
+            text-decoration: none; /* Menghilangkan garis bawah pada link kartu */
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        /* Efek Hover */
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #1c4c32;
+            background-color: #0d281a; /* Sedikit lebih terang saat di-hover */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-icon {
+            font-size: 28px;
+            display: inline-block;
+        }
+
+        .card-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #e2e8f0;
+            text-align: center;
+        }
+
+        /* Warna ikon tambahan (opsional) */
+        .card-icon.purple { color: #c084fc; }
+        .card-icon.blue { color: #60a5fa; }
+
+        /* --- Pop-up Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(4, 20, 12, 0.85); /* Overlay gelap dengan sentuhan warna dasar hijau */
+            backdrop-filter: blur(5px); /* Efek blur di latar belakang */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: #0b2216;
+            border: 2px solid #18442c;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(57, 255, 20, 0.1);
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 50px;
+            color: #39ff14;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .modal-text {
+            font-size: 14px;
+            color: #a3b8cc;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .modal-btn {
+            background-color: #22c55e;
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 14px;
+            font-weight: 700;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        }
+
+        .modal-btn:hover {
+            background-color: #4ade80;
+            transform: translateY(-2px);
+        }
+
+        .modal-btn:active {
+            transform: translateY(0);
+        }
+
+        /* --- Responsive Media Queries --- */
+        @media (max-width: 768px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+            body {
+                padding: 20px 10px;
+            }
+            .header-card {
+                padding: 20px 15px;
+            }
+            .main-title {
+                font-size: 32px;
+            }
+            .modal-content {
+                padding: 25px 20px;
+            }
+        }
+    </style>
 </head>
 <body>
+    
+    <!-- Struktur Elemen HTML Modal -->
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal-content">
+            <div class="modal-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <h2 class="modal-title">Selamat Datang!</h2>
+            <p class="modal-text">
+                Selamat datang di Dashboard <strong>Kreator Deso</strong>. Temukan berbagai macam tools AI terbaik untuk mempermudah proses pembuatan konten kreatif Anda di sini!
+            </p>
+            <button class="modal-btn" id="closeModalBtn">Mulai Eksplorasi</button>
+        </div>
+    </div>
 
     <div class="container">
         <!-- Section Atas (Header Card) -->
         <header class="header-card">
-            <div class="badge-top"> Tools AI Konten Kreator</div>
+            <div class="badge-top">Tools AI Konten Kreator</div>
             <h1 class="main-title">Kreator Deso</h1>
             <p class="subtitle">👑 <strong>مَنْ جَدَّ وَجَدَ</strong> “Barang siapa yang bersungguh-sungguh, maka ia akan berhasil”★</p>
             
-            <!-- Elemen ini sekarang dikontrol oleh JavaScript -->
+            <!-- Elemen ini dikontrol oleh JavaScript -->
             <div class="search-mock"><span id="typing-text"></span><span class="cursor">|</span></div>
             
             <div class="info-row">
@@ -26,111 +350,134 @@
             </div>
             
             <div class="status-online">
-    <span class="dot"></span> 
-    <span id="online-count">6.688</span> Sedang Online
-</div>
+                <span class="dot"></span> 
+                <span id="online-count">6.688</span> Sedang Online
+            </div>
         </header>
 
-       <main class="menu-grid">
-    <a href="https://aistudio.google.com/apps/ec169b75-c8a5-46d1-869f-3e1f5869b8f0?fullscreenApplet=true&showPreview=true&showAssistant=true" target="_blank" class="card">
-        <span class="card-icon purple">&#128247;</span>
-        <div class="card-title">GAMBAR TO PROMPT</div>
-    </a>
+        <main class="menu-grid">
+            <a href="https://aistudio.google.com/apps/ec169b75-c8a5-46d1-869f-3e1f5869b8f0?fullscreenApplet=true&showPreview=true&showAssistant=true" target="_blank" class="card">
+                <span class="card-icon purple">&#128247;</span>
+                <div class="card-title">GAMBAR TO PROMPT</div>
+            </a>
 
-    <a href="https://aistudio.google.com/apps/75d620f1-dea0-4165-b13e-8f0f3b351b96?showAssistant=true&showPreview=true&fullscreenApplet=true" target="_blank" class="card">
-        <img src="gif/pet.gif" alt="Deskripsi GIF" width="50">
-        <div class="card-title">ASISTEN SEO YOUTUBE</div>
-    </a>
+            <a href="https://aistudio.google.com/apps/75d620f1-dea0-4165-b13e-8f0f3b351b96?showAssistant=true&showPreview=true&fullscreenApplet=true" target="_blank" class="card">
+                <img src="gif/pet.gif" alt="Deskripsi GIF" width="50">
+                <div class="card-title">ASISTEN SEO YOUTUBE</div>
+            </a>
 
-    <a href="https://aistudio.google.com/apps/9a1fba97-bff5-4d37-8a0d-95e4200b669a?showAssistant=true&showPreview=true&fullscreenApplet=true" target="_blank" class="card">
-        <img src="gif/nyan.gif" alt="Deskripsi GIF" width="50">
-        <div class="card-title">ASISTEN SEO MEDIA SOSIAL</div>
-    </a>
+            <a href="https://aistudio.google.com/apps/9a1fba97-bff5-4d37-8a0d-95e4200b669a?showAssistant=true&showPreview=true&fullscreenApplet=true" target="_blank" class="card">
+                <img src="gif/nyan.gif" alt="Deskripsi GIF" width="50">
+                <div class="card-title">ASISTEN SEO MEDIA SOSIAL</div>
+            </a>
 
-    <a href="https://aistudio.google.com/apps/c29af305-2a0a-403b-a467-ae663481eff6?showPreview=true&showAssistant=true&fullscreenApplet=true" target="_blank" class="card">
-        <div class="card-icon blue">&#128525;</div>
-        <div class="card-title">PROMPT MUSIC INTRUMENTAL</div>
-    </a>
+            <a href="https://aistudio.google.com/apps/c29af305-2a0a-403b-a467-ae663481eff6?showPreview=true&showAssistant=true&fullscreenApplet=true" target="_blank" class="card">
+                <div class="card-icon blue">&#128525;</div>
+                <div class="card-title">PROMPT MUSIC INTRUMENTAL</div>
+            </a>
 
-   <a href="https://aistudio.google.com/apps/bb616346-2168-416d-a6a7-11598e2738d1?showPreview=true&showAssistant=true&project=gen-lang-client-0999383054&fullscreenApplet=true" target="_blank" class="card">
-        <div class="card-icon blue">&#x1F4BB;</div>
-        <div class="card-title">CERITAKU</div>
-   </a>
+            <a href="https://aistudio.google.com/apps/bb616346-2168-416d-a6a7-11598e2738d1?showPreview=true&showAssistant=true&project=gen-lang-client-0999383054&fullscreenApplet=true" target="_blank" class="card">
+                <div class="card-icon blue">&#x1F4BB;</div>
+                <div class="card-title">CERITAKU</div>
+            </a>
 
-   <a href="https://aistudio.google.com/apps/9af3242e-92e9-421e-89b0-f2e367da7f94?showPreview=true&showAssistant=true&fullscreenApplet=true" target="_blank" class="card">
-        <div class="card-icon blue">&#x2728;</div>
-        <div class="card-title">MUSIC SEO METADATA GENERATOR</div>
-   </a>
+            <a href="https://aistudio.google.com/apps/9af3242e-92e9-421e-89b0-f2e367da7f94?showPreview=true&showAssistant=true&fullscreenApplet=true" target="_blank" class="card">
+                <div class="card-icon blue">&#x2728;</div>
+                <div class="card-title">MUSIC SEO METADATA GENERATOR</div>
+            </a>
 
-   <a href="https://drive.google.com/file/d/1VE3wt8heZZnLSXNWeEgIGu8pdFarIxsU/view?usp=sharing" target="_blank" class="card">
-        <img src="gif/jammies.gif" alt="Deskripsi GIF" width="50">
-        <div class="card-title">RESETTER IDM</div>
-   </a>
-           
-</main>
+            <a href="https://drive.google.com/file/d/1VE3wt8heZZnLSXNWeEgIGu8pdFarIxsU/view?usp=sharing" target="_blank" class="card">
+                <img src="gif/jammies.gif" alt="Deskripsi GIF" width="50">
+                <div class="card-title">RESETTER IDM</div>
+            </a>           
+        </main>
     </div>
 
-  <script>
-    // ==========================================
-    // 1. EFEK TEKS MENGETIK (TYPEWRITER)
-    // ==========================================
-    const words = [
-        "Dari ide sampai publish",
-        "Riset keyword instan",
-        "Bikin skrip video otomatis",
-        "Generate gambar AI sekali klik"
-    ];
-    let wordIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    const textElement = document.getElementById("typing-text");
+    <script>
+        // ==========================================
+        // 1. EFEK TEKS MENGETIK (TYPEWRITER)
+        // ==========================================
+        const words = [
+            "Dari ide sampai publish",
+            "Riset keyword instan",
+            "Bikin skrip video otomatis",
+            "Generate gambar AI sekali klik"
+        ];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const textElement = document.getElementById("typing-text");
 
-    function type() {
-        const currentWord = words[wordIndex];
-        if (isDeleting) {
-            textElement.textContent = currentWord.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            textElement.textContent = currentWord.substring(0, charIndex + 1);
-            charIndex++;
+        function type() {
+            const currentWord = words[wordIndex];
+            if (isDeleting) {
+                textElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let speed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                speed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                speed = 500;
+            }
+            setTimeout(type, speed);
         }
 
-        let speed = isDeleting ? 50 : 100;
+        // ==========================================
+        // 2. COUNTER ANGKA REALTIME
+        // ==========================================
+        let currentOnline = 6688; 
+        function updateOnlineRealtime() {
+            const change = Math.floor(Math.random() * 8) - 3; 
+            currentOnline += change;
+            
+            if (currentOnline < 50) currentOnline += 5;
+            if (currentOnline > 6750) currentOnline -= 5;
 
-        if (!isDeleting && charIndex === currentWord.length) {
-            speed = 2000;
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            wordIndex = (wordIndex + 1) % words.length;
-            speed = 500;
+            const el = document.getElementById("online-count");
+            if(el) el.textContent = currentOnline.toLocaleString('id-ID');
+
+            setTimeout(updateOnlineRealtime, Math.floor(Math.random() * 10000) + 5000);
         }
-        setTimeout(type, speed);
-    }
 
-    // ==========================================
-    // 2. COUNTER ANGKA REALTIME
-    // ==========================================
-    let currentOnline = 100;
-    function updateOnlineRealtime() {
-        const change = Math.floor(Math.random() * 8) - 3; 
-        currentOnline += change;
-        
-        if (currentOnline < 50) currentOnline += 5;
-        if (currentOnline > 6750) currentOnline -= 5;
+        // ==========================================
+        // 3. LOGIKA POP-UP MODAL OTOMATIS
+        // ==========================================
+        function initModal() {
+            const modal = document.getElementById("welcomeModal");
+            const closeBtn = document.getElementById("closeModalBtn");
 
-        const el = document.getElementById("online-count");
-        if(el) el.textContent = currentOnline.toLocaleString('id-ID');
+            // Periksa apakah pengguna sudah melihat modal pada sesi ini
+            if (!sessionStorage.getItem("modalShown")) {
+                // Tunda pemunculan modal sebentar (800ms) agar terasa lebih smooth setelah halaman termuat
+                setTimeout(() => {
+                    modal.classList.add("active");
+                }, 800);
+            }
 
-        setTimeout(updateOnlineRealtime, Math.floor(Math.random() * 10000) + 5000);
-    }
+            // Aksi saat tombol ditutup klik
+            closeBtn.addEventListener("click", () => {
+                modal.classList.remove("active");
+                // Tandai di session storage agar modal tidak muncul lagi pada sesi ini
+                sessionStorage.setItem("modalShown", "true");
+            });
+        }
 
-    // JALANKAN KEDUANYA SAAT HALAMAN SIAP
-    document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(type, 500);
-        updateOnlineRealtime();
-    });
-</script>
+        // JALANKAN SEMUANYA SAAT HALAMAN SIAP
+        document.addEventListener("DOMContentLoaded", () => {
+            setTimeout(type, 500);
+            updateOnlineRealtime();
+            initModal();
+        });
+    </script>
     
 </body>
 </html>
